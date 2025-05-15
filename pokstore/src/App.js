@@ -403,6 +403,163 @@ export default function App() {
           </div>
         </header>
 
+        {/* Edit Modal */}
+        {isEditModalOpen && editingCard && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 max-w-2xl w-full ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+              <h2 className={`text-2xl font-semibold mb-6 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                Modifier la carte
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    Nom
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editingCard.name}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    Édition
+                  </label>
+                  <input
+                    type="text"
+                    name="set"
+                    value={editingCard.set}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    État
+                  </label>
+                  <select
+                    name="condition"
+                    value={editingCard.condition}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  >
+                    <option value="">Sélectionner un état</option>
+                    {conditions.map(condition => (
+                      <option key={condition} value={condition}>{condition}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    Quantité
+                  </label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={editingCard.quantity}
+                    onChange={handleChange}
+                    min="1"
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    Prix (€)
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={editingCard.price}
+                    onChange={handleChange}
+                    step="0.01"
+                    min="0"
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    URL de l'image
+                  </label>
+                  <input
+                    type="url"
+                    name="imageUrl"
+                    value={editingCard.imageUrl}
+                    onChange={handleChange}
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-white' : 'text-gray-700'}`}>
+                    Notes
+                  </label>
+                  <textarea
+                    name="notes"
+                    value={editingCard.notes}
+                    onChange={handleChange}
+                    rows="3"
+                    className={`w-full p-3 rounded-xl shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                        : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                    }`}
+                  ></textarea>
+                </div>
+              </div>
+              {error && (
+                <div className="mt-4 text-red-600 text-sm">
+                  {error}
+                </div>
+              )}
+              <div className="mt-6 flex justify-end gap-4">
+                <button
+                  onClick={() => {
+                    setIsEditModalOpen(false);
+                    setEditingCard(null);
+                    setError(null);
+                  }}
+                  className={`px-4 py-2 rounded-lg ${
+                    darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
+                  } hover:bg-gray-200 transition-colors`}
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={handleEdit}
+                  className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-lg transition-all duration-200 transform hover:scale-105"
+                >
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {notification.message && (
           <div className={`fixed top-4 right-4 p-4 rounded-xl shadow-lg backdrop-blur-sm animate-slide-in-right flex items-center gap-3 ${
             notification.type === 'error' 
@@ -757,6 +914,22 @@ export default function App() {
                             <span>No image</span>
                           </div>
                         )}
+                        <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
+                          <button
+                            onClick={() => startEdit(card)}
+                            className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors transform hover:scale-110"
+                            title="Modifier"
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            onClick={() => deleteCard(card.id)}
+                            className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors transform hover:scale-110"
+                            title="Supprimer"
+                          >
+                            🗑️
+                          </button>
+                        </div>
                       </div>
                       <div className={`p-6 ${darkMode ? 'group-hover:text-gray-900' : ''}`}>
                         <h3 className={`text-xl font-semibold mb-3 truncate hover:text-clip ${darkMode ? 'text-white group-hover:text-gray-900' : 'text-gray-800'}`}>{card.name}</h3>
